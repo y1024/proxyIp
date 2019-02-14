@@ -17,6 +17,8 @@ class ProxyipPipeline(object):
         item = dict(item)
         # 检测ip是否存在
         exist = self.collection.find_one({'ip': item['ip']}).count()
-        if exist == 0:
+        if exist > 0:
+            print("%s已存在" % item['ip'])
+        else:
             self.collection.insert_one(item)
         return item
