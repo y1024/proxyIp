@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 from fake_useragent import UserAgent
 from pymongo import MongoClient
