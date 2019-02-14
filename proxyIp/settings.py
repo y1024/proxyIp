@@ -27,6 +27,11 @@ REFERER_ENABLED = True
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# 禁止重试
+RETRY_ENABLED = False
+
+# 超时
+DOWNLOAD_TIMEOUT = 2
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 100
 
