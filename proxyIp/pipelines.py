@@ -14,5 +14,9 @@ class ProxyipPipeline(object):
         self.collection = db.list
 
     def process_item(self, item, spider):
-        self.collection.insert_one(dict(item))
+        item = dict(item)
+        # 检测ip是否存在
+        exist = self.collection.find_one({'ip': item['ip']}).count()
+        if exist == 0:
+            self.collection.insert_one(item)
         return item
