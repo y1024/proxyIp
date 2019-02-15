@@ -34,7 +34,8 @@ class CheckIp:
     def get_ips(self):
         del_count = 0
         ip_list = self.collection.find()
-        if ip_list.count() > 0:
+        ip_count = ip_list.count()
+        if ip_count > 0:
             self.logger.info("过滤开始")
             for item in list(ip_list):
                 result = self.check_ip(item['type'].lower(), item['ip'], item['port'])
@@ -45,7 +46,7 @@ class CheckIp:
                     self.logger.info("已清除")
         else:
             self.logger.info("无数据")
-        self.logger.info("过滤结束,共清除：%d个IP" % del_count)
+        self.logger.info("过滤IP结束,过滤总数：%d个,共清除：%d个" % (ip_count, del_count))
 
 
 if __name__ == '__main__':
