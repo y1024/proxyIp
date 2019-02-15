@@ -11,7 +11,7 @@ class Logger:
         console_handler.setFormatter(
             logging.Formatter(
                 fmt='%(asctime)s %(levelname)s:%(message)s',
-                datefmt='%Y-%d-%m %H:%M:%S'
+                datefmt='%Y-%m-%d %H:%M:%S'
             )
         )
         self.logger.addHandler(console_handler)
