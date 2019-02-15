@@ -6,7 +6,7 @@ import logging
 
 class XiciSpider(scrapy.Spider):
     logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', datefmt='%Y-%d-%m %H:%M:%S',
-                        filename='/data/log/checkIp.log', filemode='w', level=logging.DEBUG)
+                        filename='/data/log/proxyIp.log', filemode='w', level=logging.DEBUG)
 
     name = 'xici'
     allowed_domains = ['xicidaili.com']

@@ -110,7 +110,7 @@ class ProxyipDownloaderMiddleware(object):
 class ProxyipMiddleware(object):
     def __init__(self):
         logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', datefmt='%Y-%d-%m %H:%M:%S',
-                            filename='/data/log/checkIp.log', filemode='w', level=logging.DEBUG)
+                            filename='/data/log/proxyIp.log', filemode='w', level=logging.DEBUG)
         client = MongoClient()
         db = client.ips
         self.collection = db.list
