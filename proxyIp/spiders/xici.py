@@ -3,7 +3,7 @@ import scrapy
 from proxyIp.items import ProxyipItem
 from setLogger import Logger
 
-logger = Logger()
+logger = Logger("proxyIp.log")
 
 
 class XiciSpider(scrapy.Spider):

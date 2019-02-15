@@ -2,9 +2,19 @@ import logging
 
 
 class Logger:
-    def __init__(self):
+    def __init__(self,filename):
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.DEBUG)
+
+        file_handler = logging.FileHandler(filename, mode='w')
+        file_handler.setLevel(logging.INFO)
+        file_handler.setFormatter(
+            logging.Formatter(
+                fmt='%(asctime)s %(levelname)s:%(message)s',
+                datefmt='%Y-%m-%d %H:%M:%S'
+            )
+        )
+        self.logger.addHandler(file_handler)
 
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.DEBUG)

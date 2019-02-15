@@ -113,7 +113,7 @@ class ProxyipMiddleware(object):
         db = client.ips
         self.collection = db.list
         self.collection = db.list
-        self.logger = Logger()
+        self.logger = Logger("proxyIp.log")
 
     def process_request(self, request, spider):
         self.logger.info("正在请求：%s" % request.url)

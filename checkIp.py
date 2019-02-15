@@ -12,7 +12,7 @@ class CheckIp:
         client = MongoClient()
         db = client.ips
         self.collection = db.list
-        self.logger = Logger()
+        self.logger = Logger("checkIp.log")
 
     def check_ip(self, type, ip, port):
         ua = UserAgent()
