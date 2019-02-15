@@ -7,7 +7,7 @@ class Logger:
         self.logger.setLevel(logging.DEBUG)
 
         file_handler = logging.FileHandler(filename, mode='w')
-        file_handler.setLevel(logging.INFO)
+        file_handler.setLevel(logging.WARNING)
         file_handler.setFormatter(
             logging.Formatter(
                 fmt='%(asctime)s %(levelname)s:%(message)s',
