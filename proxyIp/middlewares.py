@@ -9,6 +9,7 @@ from scrapy import signals
 from pymongo import MongoClient
 from fake_useragent import UserAgent
 import random
+import logging
 
 
 class ProxyipSpiderMiddleware(object):
@@ -108,19 +109,21 @@ class ProxyipDownloaderMiddleware(object):
 
 class ProxyipMiddleware(object):
     def __init__(self):
+        logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', datefmt='%Y-%d-%m %H:%M:%S',
+                            filename='/data/log/checkIp.log', filemode='w', level=logging.DEBUG)
         client = MongoClient()
         db = client.ips
         self.collection = db.list
 
     def process_request(self, request, spider):
-        print("正在请求：%s" % request.url)
+        logging.info("正在请求：%s" % request.url)
         ua = UserAgent()
         request.headers['User-Agent'] = ua.random
         ip_list = self.collection.find()
         if ip_list.count() > 1:
             ip = random.choice(list(ip_list))
             proxy = "%s://%s:%s" % (ip['type'].lower(), ip['ip'], ip['port'])
-            print("%s使用的代理ip是：%s" % (request.url, proxy))
+            logging.info("%s使用的代理ip是：%s" % (request.url, proxy))
             request.meta['proxy'] = proxy
 
     def process_response(self, request, response, spider):
@@ -132,8 +135,8 @@ class ProxyipMiddleware(object):
         # - or raise IgnoreRequest
 
         if response.status != 200:
-            print("%s的状态是：%d" % (request.url, response.status))
-            print("正在重新请求：%s" % request.url)
+            logging.info("%s的状态是：%d" % (request.url, response.status))
+            logging.info("正在重新请求：%s" % request.url)
             return request
         return response
 
@@ -145,5 +148,5 @@ class ProxyipMiddleware(object):
         # - return None: continue processing this exception
         # - return a Response object: stops process_exception() chain
         # - return a Request object: stops process_exception() chain
-        print("%s请求异常，正在发起重新请求" % request.url)
+        logging.warning("%s请求异常，正在发起重新请求" % request.url)
         return request

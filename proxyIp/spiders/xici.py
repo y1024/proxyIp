@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from proxyIp.items import ProxyipItem
+import logging
 
 
 class XiciSpider(scrapy.Spider):
+    logging.basicConfig(format='%(asctime)s %(levelname)s:%(message)s', datefmt='%Y-%d-%m %H:%M:%S',
+                        filename='/data/log/checkIp.log', filemode='w', level=logging.DEBUG)
+
     name = 'xici'
     allowed_domains = ['xicidaili.com']
     start_urls = ['https://www.xicidaili.com/wn/',
                   'https://www.xicidaili.com/wt/']
 
     def parse(self, response):
-        print("请求成功:%s" % response.request.url)
+        logging.info("请求成功:%s" % response.request.url)
         ul = response.css('#ip_list')
         for li in ul:
             tr = li.css('tr:nth-child(n+2)')
@@ -35,6 +39,6 @@ class XiciSpider(scrapy.Spider):
                 yield item
         page_href = response.css('.next_page::attr(href)').extract_first()
         page_num = int(response.css('.pagination em.current::text').extract_first())
-        print("爬取完成:%s" % response.request.url)
+        logging.info("爬取完成:%s" % response.request.url)
         if page_num < 5:
             yield response.follow(page_href, callback=self.parse)
